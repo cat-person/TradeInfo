@@ -1,0 +1,10 @@
+{
+	"id":"tradeinfo",
+	"name":"Trade Info",
+	"author":"Not a Cat",
+	"version":"0.0.1", 
+	"description":"Display deficit and abundance of commodities within intel panel",
+    "gameVersion": "0.97a-RC7",
+	"jars":["jars/TradeInfo.jar"],
+	"modPlugin": "net.not_a_cat.TemplateModPlugin"
+}
