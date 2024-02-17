@@ -4,14 +4,17 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.FactionAPI;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.StoryPointActionDelegate;
+import com.fs.starfarer.api.campaign.listeners.ListenerUtil;
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin;
 import com.fs.starfarer.api.impl.campaign.intel.inspection.HegemonyInspectionIntel;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.IntelUIAPI;
 import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import com.fs.starfarer.api.campaign.listeners.EconomyTickListener;
 
 import java.awt.*;
+import java.awt.event.AWTEventListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,13 +51,16 @@ class TradeIntelItem extends BaseIntelPlugin {
     @Override
     public String getSmallDescriptionTitle() {
         return "AAAAAAADDSDS";
+//        ListenerUtil
     }
+
 
     @Override
     public void createSmallDescription(TooltipMakerAPI info, float width, float height) {
 //        super.createSmallDescription(info, width, height);
+
         float opad = 10f, pad = 3f;
-        info.addImage(getIcon(), width, 128, pad);
+        info.addImage(getIcon(), width, height, pad);
     }
 
     //    @Override
