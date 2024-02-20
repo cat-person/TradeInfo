@@ -1,10 +1,12 @@
 package net.not_a_cat;
 
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin;
 import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.util.Misc;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +20,12 @@ public class CommodityDeficitIntel extends BaseIntelPlugin {
         this.commodityId = commodityId;
         this.deficit = deficit;
         this.price = price;
+        try {
+            Global.getSettings().loadTexture(getIcon());
+        } catch (IOException textureLoadigExcetion) {
+
+            
+        }
     }
 
     @Override
