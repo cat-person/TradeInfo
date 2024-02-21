@@ -1,6 +1,7 @@
 package net.not_a_cat;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin;
 import com.fs.starfarer.api.ui.SectorMapAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
@@ -11,21 +12,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class CommodityDeficitIntel extends BaseIntelPlugin {
+    private final SectorEntityToken entityToken;
     private final String commodityId;
     private final int deficit;
-
     private final int price;
 
-    public CommodityDeficitIntel(String commodityId, int deficit, int price) {
+    private boolean shouldRemove = false;
+
+    public CommodityDeficitIntel(SectorEntityToken entityToken, String commodityId, int deficit, int price) {
+        this.entityToken = entityToken;
         this.commodityId = commodityId;
         this.deficit = deficit;
         this.price = price;
-        try {
-            Global.getSettings().loadTexture(getIcon());
-        } catch (IOException textureLoadigExcetion) {
+    }
 
-            
-        }
+
+    @Override
+    public SectorEntityToken getPostingLocation() {
+        return Global.getSector().getEntityById("jangala");
+    }
+
+    public void markForRemove() {
+        shouldRemove = true;
+    }
+
+    @Override
+    public boolean shouldRemoveIntel() {
+        return shouldRemove;
     }
 
     @Override
@@ -37,19 +50,19 @@ public class CommodityDeficitIntel extends BaseIntelPlugin {
 
     @Override
     public String getIcon() {
-        return "graphics/icons/rem_salvation.png";
+        return Global.getSector().getEconomy().getCommoditySpec(commodityId).getIconName();
     }
 
     @Override
     protected String getName() {
-        return String.format("Commodity %s deficit", commodityId);
+        return String.format("There is %s deficit in %s", commodityId, entityToken.getName());
     }
 
     @Override
     public void createSmallDescription(TooltipMakerAPI info, float width, float height) {
-        float opad = 10f;
-        info.addImage("graphics/icons/rem_salvation.png", width, height, opad);
-        info.addPara("In Jangala there is " + getName(), opad);
-        info.addPara(Misc.getAgoStringForTimestamp(timestamp) + ".", opad);
+        float padding = 10f;
+        info.addImage(Global.getSector().getEconomy().getCommoditySpec(commodityId).getIconName(), width, height, padding);
+        info.addPara(getName(), padding);
+        info.addPara(Misc.getAgoStringForTimestamp(timestamp) + ".", padding);
     }
 }
